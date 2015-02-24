@@ -29,7 +29,8 @@
   <body>
       
 
-        <div class="container-fluid" style="background-image:url(http://www.rdmediallc.com/fb/wp-content/uploads/2014/08/Food-Infographic1.jpg);height: auto;">    
+        <div class="container-fluid"  style="background-image:url(http://www.rdmediallc.com/fb/wp-content/uploads/2014/08/Food-Infographic1.jpg);height: auto;">
+            
         <div id="loginbox" style="margin-top:150px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">     
             
 
@@ -179,7 +180,66 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
           <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<!-- <script>
+$( "#btn-login" ).click(function(e) {
+       e.preventDefault();
+ var password = $('#login-password').val();
+ var username = $('#login-username').val();
 
+alert( $('#login-password').val());
+$("#btn-login").Text="aaa";
+});
+</script>
+      -->
+      
+      <script>
+ //     $(document).ready(function() {
+
+		//the min chars for username
+		var min_chars = 1;
+
+		//result texts
+		var characters_error = 'Minimum amount of chars is 3';
+		var checking_html = 'Checking...';
+
+		//when login button is clicked
+		$('#btn-login').click(function(){
+			//run the character number check
+			if(($('#login-username').val().length<min_chars) || ($('#login-password').val().length<min_chars)){
+				//if it's bellow the minimum show characters_error text '
+				alert("username or password is missing!");
+			}else{
+				check_existance();
+			}
+            
+		});
+
+//  });
+          //function to check username and pass existance
+function check_existance(){
+
+		//get the username and pass
+		var username = $('#login-username').val();
+		var password = $('#login-password').val();
+
+    
+		//use ajax to run the check
+		$.post("php/check_username.php", { username: username, password: password },
+			function(result){
+                    $( '#msg' )
+                    .html( 'Unknown username and password' )
+                    .addClass( 'formError' )
+                    .fadeIn("slow");				//if the result is 1
+				if(result == 1){
+					//login
+				}else{
+					alert("usernme or password does not exist");
+				}
+		});
+
+}
+
+      </script>
       
 
   </body>
