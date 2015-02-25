@@ -26,10 +26,10 @@
     
 <!------------------------------------------------------------------------>
      
-  <body>
+  <body background="Food-Infographic1.jpg">
       
 
-        <div class="container-fluid"  style="background-image:url(http://www.rdmediallc.com/fb/wp-content/uploads/2014/08/Food-Infographic1.jpg);height: auto;">
+        <div class="container-fluid"  style="height: auto;">
             
         <div id="loginbox" style="margin-top:150px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">     
             
@@ -114,35 +114,25 @@
                                 <div class="form-group">
                                     <label for="email" class="col-md-3 control-label">Email</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="email" placeholder="Email Address">
+                                        <input id="register-email" type="text" class="form-control" name="email" placeholder="Email Address">
                                     </div>
                                 </div>
                                     
                                 <div class="form-group">
-                                    <label for="firstname" class="col-md-3 control-label">First Name</label>
+                                    <label for="username" class="col-md-3 control-label">User Name</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="firstname" placeholder="First Name">
+                                        <input id="register-username" type="text" class="form-control" name="username" placeholder="User Name">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="lastname" class="col-md-3 control-label">Last Name</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" name="lastname" placeholder="Last Name">
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group">
                                     <label for="password" class="col-md-3 control-label">Password</label>
                                     <div class="col-md-9">
-                                        <input type="password" class="form-control" name="passwd" placeholder="Password">
+                                        <input id="register-password" type="password" class="form-control" name="passwd" placeholder="Password">
                                     </div>
                                 </div>
                                     
-                                <div class="form-group">
-                                    <label for="icode" class="col-md-3 control-label">Invitation Code</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" name="icode" placeholder="">
-                                    </div>
-                                </div>
+                            
 
                                 <div class="form-group">
                                     <!-- Button -->                                        
@@ -155,7 +145,14 @@
                                 <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group">
                                     
                                     <div class="col-md-offset-3 col-md-9">
+
+                                                       
                                         <button id="btn-fbsignup" type="button" class="btn btn-primary" >   Sign Up with Google</button>
+                                        
+                                        
+ </p>                                    
+                                    
+                                        
                                     </div>                                           
                                         
                                 </div>
@@ -174,27 +171,16 @@
 
     </div><!--/.container-->
 
-
+      
+      
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
           <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<!-- <script>
-$( "#btn-login" ).click(function(e) {
-       e.preventDefault();
- var password = $('#login-password').val();
- var username = $('#login-username').val();
 
-alert( $('#login-password').val());
-$("#btn-login").Text="aaa";
-});
-</script>
-      -->
       
       <script>
- //     $(document).ready(function() {
-
 		//the min chars for username
 		var min_chars = 1;
 
@@ -226,21 +212,116 @@ function check_existance(){
 		//use ajax to run the check
 		$.post("php/check_username.php", { username: username, password: password },
 			function(result){
-                    $( '#msg' )
-                    .html( 'Unknown username and password' )
-                    .addClass( 'formError' )
-                    .fadeIn("slow");				//if the result is 1
+                 			//if the result is 1
 				if(result == 1){
-					//login
+                    
+        //login function
+        // $('#login-username').val("imagine that you are logged in!!! :P");
+                    
+window.location.href = 'https://www.youtube.com/watch?v=vhxngaOuqjw#t=1m7s';
 				}else{
-					alert("usernme or password does not exist");
+					alert("incorrect usernme or password!" );
 				}
 		});
 
 }
 
       </script>
-      
 
+
+    
+ <!-- to make a new user -->   
+         <script>
+		//the min chars for username
+		var min_chars = 1;
+
+
+		//when sign up button is clicked
+		$('#btn-signup').click(function(){
+			//run the character number check
+			if(($('#register-username').val().length<min_chars) || ($('#register-password').val().length<min_chars)){
+				//if it's bellow the minimum show characters_error text '
+				alert("username or password is missing!");
+			}else{
+                if($('#register-email').val().length>min_chars){
+                    
+                				make_username();
+
+                
+                }
+                
+			}
+            
+		});
+
+//  });
+          //function to check username and pass existance
+function make_username(){
+
+		//get the username and pass
+		var username = $('#register-username').val();
+		var password = $('#register-password').val();
+        var email = $('#register-email').val();
+
+
+    
+		//use ajax to run the check
+		$.post("php/make_username.php", { username: username, password: password, email: email },
+			function(result){
+                 			//if everything is ok
+				if(result == 0){
+   
+					alert("you are succesfully registered!" );
+//go to login page
+                    $('#signupbox').hide();
+                    $('#register-username').val('');
+                     $('#register-password').val('');
+                    $('#register-email').val('');
+                    $('#loginbox').show();
+				}else{
+                     if(result == 1)
+                     alert("You already have and account with this email, please login." );
+                    if(result == 2)
+					alert("usernme is already taken" );
+         //       $('#register-username').css("color", "red");
+                    
+				} 
+		});
+
+}
+
+      </script>
+    
+    
+    
+    
+    
+<!-- not used yet    -->
+    
+    <script>
+
+      function goToPage( id ) {
+
+  var node = document.getElementById( id );
+  
+  // Check to see if valid node and if node is a SELECT form control
+  
+  if( node &&
+    node.tagName == "SELECT" ) {
+
+    // Go to web page defined by the VALUE attribute of the OPTION element
+
+    window.location.href = node.options[node.selectedIndex].value;
+    
+  } // endif
+  
+  
+}
+       </script>
+  
+      
+    
   </body>
 </html>
+
+
